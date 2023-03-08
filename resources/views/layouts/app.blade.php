@@ -100,5 +100,6 @@
 <script src="{{ asset('js/adminlte.min.js') }}" defer></script>
 
 @yield('scripts')
+@stack('scripts')
 </body>
 </html>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
@@ -28,5 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
     //Companies
-    Route::put('company', [ProfileController::class, 'show'])->name('company.update');
+    Route::get('company', [CompanyController::class, 'index'])->name('company.index');
+    Route::get('company/create', [CompanyController::class, 'create'])->name('company.create');
+    Route::post('company/store', [CompanyController::class, 'store'])->name('company.store');
+    Route::get('company/edit/{id}', [CompanyController::class, 'edit'])->name('company.edit');
+    Route::post('company/update/{id}', [CompanyController::class, 'update'])->name('company.update');
+    Route::post('company/destroy/{id}', [CompanyController::class, 'destroy'])->name('company.destroy');
 });

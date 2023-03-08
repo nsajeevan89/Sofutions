@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use Illuminate\Http\Request;
 
+
 class CompanyController extends Controller
 {
     /**
@@ -14,7 +15,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $companies = Company::paginate(10);;
+        return view('company', compact('companies'));
     }
 
     /**
@@ -24,7 +26,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('create_company');
     }
 
     /**
@@ -35,7 +37,33 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validation
+        $validated = $request->validate([
+            'inputCompanyName' => 'required|unique:companies,name|max:255',
+            'inputCompanyEmail1' => 'nullable|unique:companies,email|max:255',
+            'inputCompanyLogo' => 'image|mimes:jpg,png,jpeg,gif,svg|dimensions:min_width=100,min_height=100',
+        ]);
+
+        $imageName =""; 
+        //image uploading
+        if($request->hasFile('inputCompanyLogo')){
+            //filename with Extension
+            $image = $request->file('inputCompanyLogo');
+            $imageName =  time() . '.' . $image->extension();
+            //file to store
+            $request->file('inputCompanyLogo')->storeAs('public/logo/',$imageName);
+        }
+
+        //store data to databse
+        $company = new Company;
+        $company->name = $request->inputCompanyName;
+        $company->email = $request->inputCompanyEmail1;
+        $company->website = $request->inputCompanyWebsite;
+        $company->logo = $imageName;
+        $company->save();
+
+        return redirect('company')->with('status', 'Successfully added!');
+
     }
 
     /**
@@ -55,9 +83,10 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company)
+    public function edit($id)
     {
-        //
+        $company = Company::find($id);
+        return view('edit_company', compact('company'));
     }
 
     /**
@@ -67,9 +96,34 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $company)
+    public function update(Request $request, $id)
     {
-        //
+        //validation
+        $validated = $request->validate([
+            'inputCompanyName' => 'required|max:255|unique:companies,name,'.$id,
+            'inputCompanyEmail1' => 'nullable|unique:companies,email|max:255',
+            'inputCompanyLogo' => 'image|mimes:jpg,png,jpeg,gif,svg|dimensions:min_width=100,min_height=100',
+        ]);
+
+        $imageName =""; 
+        //image uploading
+        if($request->hasFile('inputCompanyLogo')){
+            //filename with Extension
+            $image = $request->file('inputCompanyLogo');
+            $imageName =  time() . '.' . $image->extension();
+            //file to store
+            $request->file('inputCompanyLogo')->storeAs('public/logo/',$imageName);
+        }
+
+        //store data to databse
+        $company = Company::find($id);
+        $company->name = $request->inputCompanyName;
+        $company->email = $request->inputCompanyEmail1;
+        $company->website = $request->inputCompanyWebsite;
+        $company->logo = $imageName;
+        $company->save();
+
+        return redirect('company')->with('status', 'Successfully updated!');
     }
 
     /**
@@ -78,8 +132,11 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company)
+    public function destroy($id)
     {
-        //
+        $company=Company::find($id);
+        $company->delete();
+
+        return redirect('company')->with('status', 'Successfully deleted!');
     }
 }
