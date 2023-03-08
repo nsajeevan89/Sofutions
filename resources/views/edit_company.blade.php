@@ -41,7 +41,7 @@
                     </div>
                     <div class="form-group">
                       <label for="inputCompanyWebsite">Website</label>
-                      <input type="password" class="form-control @error('inputCompanyWebsite') is-invalid @enderror" name="inputCompanyWebsite" id="inputCompanyWebsite" placeholder="web url" value="{{ $company->website }}">
+                      <input type="text" class="form-control @error('inputCompanyWebsite') is-invalid @enderror" name="inputCompanyWebsite" id="inputCompanyWebsite" placeholder="web url" value="{{ $company->website }}">
                       @error('inputCompanyWebsite')<div class="alert alert-danger">{{ $message }}</div>@enderror
                     </div>
                     <div class="form-group">
