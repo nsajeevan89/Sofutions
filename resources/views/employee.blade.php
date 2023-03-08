@@ -53,7 +53,7 @@
                                 <td>{{$employee->last_name}}</td>
                                 <td>{{$employee->email}}</td>
                                 <td>{{$employee->phone}}</td>
-                                <td>{{$employee->company_id}}</td>
+                                <td>{{$employee->company->name}}</td>
                                 <td>
                                     <a class="btn btn-warning btn-sm" href="{{ route('employee.edit', $employee->id) }}"><i class="fas fa-edit"></i> Edit</a>
                                     <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="confirmDeleteEmployee({{$employee->id}})"><i class="fas fa-trash"></i> Delete</a>

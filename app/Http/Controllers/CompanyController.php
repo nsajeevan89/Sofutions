@@ -42,6 +42,7 @@ class CompanyController extends Controller
             'inputCompanyName' => 'required|unique:companies,name|max:255',
             'inputCompanyEmail1' => 'nullable|email|unique:companies,email|max:255',
             'inputCompanyLogo' => 'image|mimes:jpg,png,jpeg,gif,svg|dimensions:min_width=100,min_height=100',
+            'inputCompanyWebsite' => 'nullable|url',
         ]);
 
         $imageName =""; 
@@ -102,7 +103,8 @@ class CompanyController extends Controller
         $validated = $request->validate([
             'inputCompanyName' => 'required|max:255|unique:companies,name,'.$id,
             'inputCompanyEmail1' => 'nullable|email|unique:companies,email|max:255',
-            'inputCompanyLogo' => 'image|mimes:jpg,png,jpeg,gif,svg|dimensions:min_width=100,min_height=100',
+            'inputCompanyLogo' => 'nullableimage|mimes:jpg,png,jpeg,gif,svg|dimensions:min_width=100,min_height=100',
+            'inputCompanyWebsite' => 'nullable|url',
         ]);
 
         $imageName =""; 

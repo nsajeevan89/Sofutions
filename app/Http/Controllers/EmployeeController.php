@@ -43,7 +43,7 @@ class EmployeeController extends Controller
             'inputEmployeeFirstName' => 'required|max:255',
             'inputEmployeeLastName' => 'required|max:255',
             'inputEmployeeEmail1' => 'nullable|email|unique:employees,email|max:255',
-            'inputEmployeePhone' => 'nullable|min:9|numeric',
+            'inputEmployeePhone' => 'nullable|digits:10',
             'inputEmployeeCompany' => 'required',
         ]);
 
@@ -97,7 +97,7 @@ class EmployeeController extends Controller
             'inputEmployeeFirstName' => 'required|max:255',
             'inputEmployeeLastName' => 'required|max:255',
             'inputEmployeeEmail1' => 'nullable|email|max:255|unique:employees,email,'.$id,
-            'inputEmployeePhone' => 'nullable|min:9|numeric',
+            'inputEmployeePhone' => 'nullable|digits:10',
             'inputEmployeeCompany' => 'required',
         ]);
 
